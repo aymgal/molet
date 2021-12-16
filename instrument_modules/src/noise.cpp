@@ -124,8 +124,9 @@ void UniformGaussian::calculateNoise(){
 
   // Renormalize by adding the minimum (negative) noise value
   // This is needed because the pixels can contain nan's if mag scale is used
+  this->offset = abs(this->min_noise);
   for(int i=0;i<this->noise_realization->Nz;i++){
-    this->noise_realization->z[i] += abs(this->min_noise);
+    this->noise_realization->z[i] += this->offset;
   }
 }
 
@@ -136,6 +137,7 @@ void UniformGaussian::outputNoiseProperties(std::string output,std::string instr
   json_obj["type"] = "UniformGaussian";
   json_obj["sigma"] = this->sigma;
   json_obj["min_noise"] = this->min_noise;
+  json_obj["offset"] = this->offset;
   std::ofstream noise_properties(output + instrument_name + "_noise_properties.json");
   noise_properties << json_obj;
   noise_properties.close();

@@ -48,6 +48,7 @@ public:
   double sn;   // signal to noise ratio
   double sigma;
   double min_noise; // the minimum value of the noise
+  double offset; // the effective offset added to the image
   UniformGaussian(double sn);
   void setGrid(RectGrid* obs_grid);
   void initializeFromData(RectGrid* mydata);
